@@ -1,0 +1,70 @@
+{% extends 'rides/base.html' %}
+{% block title %} {{ ride.id }} {% endblock %}
+{% block content %}
+    <h3>Details - RSLCA{{ride.id}}</h3>
+    <div class="table-container">
+    <table class="table table-hover">
+        <tr>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Seats left</th>
+            <th>Pickup point</th>
+        </tr>
+        <tr>
+            <td>{{ride.origin}}</td>
+            <td>{{ride.destination}}</td>
+            <td>{{ride.date}}</td>
+            <td>{{ride.time}}</td>
+            <td>{{seats_remaining}}</td>
+            <td>{{ride.pickupDirections}}</td>
+        </tr>
+    </table>
+</div>
+   
+    {% if user == ride.name %}
+        <div>You: HOST</div>
+        <br>
+        {% if passengers %}
+        <h5>Passengers</h5>
+        <ol>
+            {% for passenger in passengers %}
+            <li>{{passenger}} - {{passenger.first_name}} {{passenger.last_name}}</li>
+            {% endfor %}
+        </ol>
+        <br>
+        {% else %}
+        <div>No passengers yet</div>
+        {% endif %}
+        <br>
+        <div>
+            <form action="{% url 'rides:detail' ride.id %}" method="post">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="pickupDirections">Update Pickup Point</label>
+                        <input type="text" name="pickupDirections" class="form-control" value="{{ride.pickupDirections}}">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Pickup Point</button>
+            </form>
+        </div>
+    {% elif user in passengers %}
+        <div>You: Passenger</div>
+        <div>HOST: {{ride.name}} - {{ride.name.first_name}} {{ride.name.last_name}}</div>
+    {% else %}
+        <form action="{% url 'rides:detail' ride.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Join this Ride</button>
+        </form>
+    {% endif %}
+{% endblock %}
+{% block account %}
+    <li>
+        <a href="{% url 'users:my_rides' %}">My Rides</a>
+    </li>
+    <li>
+        <a href="{% url 'users:logout' %}">Logout</a>
+    </li>
+{% endblock %}

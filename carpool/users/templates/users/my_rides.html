@@ -1,0 +1,62 @@
+{% extends 'rides/base.html' %}
+{% block title %} My Rides  {% endblock %}
+{% block content %}
+<h5 style="text-align: center;">Welcome {{user.first_name}}!</h5>
+{% if hosted %}
+<h3>Rides you are Hosting</h3>
+<div class="table-container">
+<table class="table table-hover mt-3">
+    <tr>
+        <th>Origin</th>
+        <th>Destination</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Details</th>
+    </tr>
+    {% for ride in hosted %}
+    <tr>
+        <td>{{ride.origin}}</td>
+        <td>{{ride.destination}}</td>
+        <td>{{ride.date}}</td>
+        <td>{{ride.time}}</td>
+        <td><a href="{% url 'rides:detail' ride.id %}">View</a></td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+<br>
+{% endif %}
+{% if taken %}
+<h3>Upcoming Rides as a Passenger</h3>
+{% if taken %}
+<div class="table-container">
+<table class="table table-hover mt-3">
+    <tr>
+        <th>Origin</th>
+        <th>Destination</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Details</th>
+    </tr>
+    {% for ride in taken %}
+    <tr>
+        <td>{{ride.origin}}</td>
+        <td>{{ride.destination}}</td>
+        <td>{{ride.date}}</td>
+        <td>{{ride.time}}</td>
+        <td><a href="{% url 'rides:detail' ride.id %}">View</a></td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}
+{% block account %}
+    <li>
+        <a href="{% url 'users:my_rides' %}">My Rides</a>
+    </li>
+    <li>
+        <a href="{% url 'users:logout' %}">Logout</a>
+    </li>
+{% endblock %}

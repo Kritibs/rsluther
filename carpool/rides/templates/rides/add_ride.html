@@ -1,0 +1,58 @@
+{% extends "rides/base.html" %}
+{% block titile %} Add a Ride {% endblock %}
+{% block content %} 
+{% if message %}
+<div>
+    <h2>{{message}}</h2>
+    <br>
+</div>
+{% endif %}
+
+
+
+
+<form action="{% url 'rides:add_ride' %}" method="POST">
+    {% csrf_token %}
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="origin">From</label>
+        <input type="text" class="form-control" name="origin" placeholder="Sitapaila" required>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="destination">To</label>
+        <input type="text" class="form-control" name="destination" placeholder="Devghat" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="Date">Date</label>
+        <input type="date" class="form-control" id="date" name="date" required>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="time">Time</label>
+        <input type="time" class="form-control" value="15:15" name="time" required>
+    </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="seats">Seats</label>
+          <input type="number" class="form-control" value="1" name="seats" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="pickupDirections">Pickup Point</label>
+          <input type="text" name="pickupDirections" class="form-control" placeholder="Pashupatinath North Door" required>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Add My Ride</button>
+  </form>
+<br>
+{% endblock %}
+
+{% block account %}
+    <li>
+        <a href="{% url 'users:my_rides' %}">My Rides</a>
+    </li>
+    <li>
+        <a href="{% url 'users:logout' %}">Logout</a>
+    </li>
+{% endblock %}

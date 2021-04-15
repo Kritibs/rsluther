@@ -1,0 +1,22 @@
+{% extends 'rides/base.html' %}
+{% block title %} Success {% endblock %}
+{% block content %}
+{% if host %}
+<div>
+   New ride created.
+</div>
+<div>You will shortly be sent an email with additional information</div>
+<div>Find this ride <a href="{% url 'rides:detail' ride.id %}">here</a></div>
+{% else %}
+<h3>Sucess</h3>
+<div>{{message}}</div>
+{% endif %}
+{% endblock %}
+{% block account %}
+    <li>
+        <a href="{% url 'users:my_rides' %}">My Rides</a>
+    </li>
+    <li>
+        <a href="{% url 'users:logout' %}">Logout</a>
+    </li>
+{% endblock %}

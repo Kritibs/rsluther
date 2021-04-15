@@ -1,0 +1,65 @@
+{% extends 'rides/base.html' %}
+{% block title %} {{ ride.id }} {% endblock %}
+{% block content %}
+    <h3>Details - RSLCB{{ride.id}}</h3>
+    <div class="table-container">
+    <table class="table table-hover mt-3">
+        <tr>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Requested by</th>
+        </tr>
+        <tr>
+            <td>{{ride.origin}}</td>
+            <td>{{ride.destination}}</td>
+            <td>{{ride.date}}</td>
+            <td>{{ride.time}}</td>
+            <td>{{ride.name.username}}</td>
+        </tr>
+    </table>
+    </div>
+    {% if user != ride.name %}
+    <p>If you're willing to give this ride, please fill this form.</p>
+    <form action="{% url 'rides:request_detail' ride.id %}" method="POST">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="time">Time</label>
+              <input type="time" class="form-control" name="time" value="13:15" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="seats">Seats</label>
+                <input type="number" class="form-control" name="seats" value="1" required>
+              </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="pickupDirections">Pickup Point</label>
+                <input type="text" class="form-control" name="pickupDirections" placeholder="Pashupatinath North Door" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Give Ride</button>
+    </form>
+    {% else %}
+    <div>You will be sent an email after your ride is accepted.
+        <br>
+        If you have already gotten another ride, you may cancel your ride request here.
+        <br>
+        <br>
+        <form action="{% url 'rides:request_cancel' ride.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Cancel my request</button>
+        </form>
+    </div>
+    {% endif %}
+{% endblock %}
+{% block account %}
+    <li>
+        <a href="{% url 'users:my_rides' %}">My Rides</a>
+    </li>
+    <li>
+        <a href="{% url 'users:logout' %}">Logout</a>
+    </li>
+{% endblock %}

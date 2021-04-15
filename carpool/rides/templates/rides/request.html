@@ -1,0 +1,43 @@
+{% extends "rides/base.html" %}
+{% block title %} Request Ride {% endblock %}
+{% block content %}
+{% if message %}
+<div>
+    {message}}
+</div>
+{% endif %}
+
+<form action="{% url 'rides:request_ride' %}" method="POST">
+    {% csrf_token %}
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="origin">From</label>
+        <input type="text" class="form-control" name="origin" placeholder="Sitapaila" required>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="destination">To</label>
+        <input type="text" class="form-control" name="destination" placeholder="Devghat" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="Date">Date</label>
+        <input type="date" class="form-control" name="date" id="date" required>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="time">Time</label>
+        <input type="text" class="form-control" name="timeConstraints" placeholder="When do you need it?" required>
+    </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Request</button>
+  </form>
+{% endblock %}
+
+{% block account %}
+    <li>
+        <a href="{% url 'users:my_rides' %}">My Rides</a>
+    </li>
+    <li>
+        <a href="{% url 'users:logout' %}">Logout</a>
+    </li>
+{% endblock %}

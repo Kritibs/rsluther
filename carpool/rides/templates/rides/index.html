@@ -1,0 +1,91 @@
+{% extends "rides/base.html" %}
+{% block title %} Home {% endblock %}
+{% block content %}
+{% if message %}
+<div>{{message}}</div>
+{% endif %}
+<h3>Upcoming Rides</h3>
+{% if rides %}
+    <div class="table-responsive mt-3">
+    <table class="table table-hover">
+        <tr>
+            <th>Booking ID</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Host</th>
+        </tr>
+        {% for ride in rides %}
+            <tr>
+                <td><a href="{% url 'rides:detail' ride.id %}">RSLCA{{ride.id}}</a></td>
+                <td>{{ride.origin}}</td>
+                <td>{{ride.destination}}</td>
+                <td>{{ride.date}}</td>
+                <td>{{ride.time}}</td>
+                <td>{% if loggedIn %}
+                    {{ride.name}}
+                    {% else %}
+                    <a href="{% url 'users:login' %}">Login To View</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% else %}
+<p>No rides</p>
+{% endif %}
+<br>
+<br>
+<h3>Requested Rides</h3>
+{% if requested_rides %}
+<div class="table-responsive mt-3">
+    <table class="table table-hover">
+        <tr>
+            <th>Request</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Requested by</th>
+        </tr>
+        {% for ride in requested_rides %}
+            <tr>
+                <td><a href="{% url 'rides:request_detail' ride.id %}">Give Ride</a></td>
+                <td>{{ride.origin}}</td>
+                <td>{{ride.destination}}</td>
+                <td>{{ride.date}}</td>
+                <td>{{ride.time}}</td>
+                <td>{% if loggedIn %}
+                    {{ride.name}}
+                    {% else %}
+                    <a href="{% url 'users:login' %}">Login To View</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% else %}
+<p>No rides</p>
+{% endif %}
+
+<br><br>
+
+{% endblock %}
+
+{% block account %}
+    {% if loggedIn %}
+    <li>
+        <a href="{% url 'users:my_rides' %}">My Rides</a>
+    </li>
+    <li>
+        <a href="{% url 'users:logout' %}">Logout</a>
+    </li>
+    {% else %}
+    <li>
+        <a href="{% url 'users:login' %}">Login</a>
+    </li> 
+    {% endif %}
+{% endblock %}

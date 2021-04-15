@@ -1,0 +1,28 @@
+.bg-primary, #footer{
+    background-color: #1073ce!important;
+}
+#footer{
+    color: white;
+}
+#footer a{
+    color: rgba(255,255,255,.5);
+    text-decoration: none;
+}
+#allBody{
+    margin-top: 16px;
+}
+#footer a:hover{
+    color: white;
+}
+.header-font{
+    font-family: 'Cinzel Decorative', cursive;
+}
+
+h1,h2,h3,h4{
+    font-family:  'Carme', sans-serif;
+}
+@media (max-width: 370px) {
+      #allBody{
+          margin-top:7em!important;
+      }
+    }

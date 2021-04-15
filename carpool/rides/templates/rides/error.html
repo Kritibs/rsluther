@@ -1,0 +1,14 @@
+{% extends 'rides/base.html' %}
+{% block title %} Error {% endblock %}
+{% block content %}
+<div>Error</div>
+<div>{{message}}</div>
+{% endblock %}
+{% block account %}
+    <li>
+        <a href="{% url 'users:my_rides' %}">My Rides</a>
+    </li>
+    <li>
+        <a href="{% url 'users:logout' %}">Logout</a>
+    </li>
+{% endblock %}

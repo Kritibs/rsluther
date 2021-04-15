@@ -1,0 +1,20 @@
+{% extends 'rides/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Contact us {% endblock %}
+{% block content %}
+        {% crispy form form.helper %}   
+{% endblock %}
+{% block account %}
+    {% if loggedIn %}
+    <li>
+        <a href="{% url 'users:my_rides' %}">My Rides</a>
+    </li>
+    <li>
+        <a href="{% url 'users:logout' %}">Logout</a>
+    </li>
+    {% else %}
+    <li>
+        <a href="{% url 'users:login' %}">Login</a>
+    </li> 
+    {% endif %}
+{% endblock %}
